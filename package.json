@@ -14,5 +14,8 @@
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "xml-js": "^1.6.11"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
   }
 }
