@@ -16,12 +16,13 @@ class Controller {
         compact: true,
         spaces: 2,
       });
-      data =
-        data.feed.entry?.filter((e) =>
-          e.link
-            .find((link) => link._attributes.type === "image/jpeg")
-            ._attributes.href.match(/.jpg/g)
-        ) || [];
+      data = data.feed.entry?.map((e) => ({
+        id: e.id._text,
+        title: e.title._text,
+        imageSrc: e.link.find((link) => link._attributes.type === "image/jpeg")
+          ._attributes.href,
+      }));
+      data = data.filter((e) => e.imageSrc.match(/.jpg/g)) || [];
       res.status(200).send(data);
     } catch (err) {
       console.log("error:", err);
