@@ -9,7 +9,6 @@ class Controller {
       if (tags?.length) {
         url += `?tags=${tags.split(" ").join(",")}`;
       }
-      console.log(url);
 
       const response = await axios.get(url);
       let data = convert.xml2js(response.data, {
@@ -21,6 +20,8 @@ class Controller {
         title: e.title._text,
         imageSrc: e.link.find((link) => link._attributes.type === "image/jpeg")
           ._attributes.href,
+        author: e.author.name._text,
+        tags: e.category.map((category) => category._attributes.term),
       }));
       data = data.filter((e) => e.imageSrc.match(/.jpg/g)) || [];
       res.status(200).send(data);
